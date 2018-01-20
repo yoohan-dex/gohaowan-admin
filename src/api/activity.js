@@ -40,7 +40,15 @@ const block = data => {
     data
   })
 }
-
+const setTop = id => top =>
+  request({
+    url: '/admin/activity/top',
+    method: 'get',
+    params: {
+      id,
+      top
+    }
+  })
 const verify = id =>
   request({
     url: '/activity/verify',
@@ -76,6 +84,7 @@ const getJoin = (id, page) =>
       page
     }
   })
+
 export default {
   addActivity,
   getActivityList,
@@ -85,5 +94,6 @@ export default {
   verify,
   cancel,
   simple,
-  getJoin
+  getJoin,
+  setTop
 }

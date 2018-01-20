@@ -66,7 +66,7 @@
     </el-form-item>
   <el-form-item>
     <el-button type="primary" @click="onSubmit">立即创建</el-button>
-    <el-button @click="reset">清空</el-button>
+    <!-- <el-button @click="reset">清空</el-button> -->
   </el-form-item>
 </el-form>
 </div>
@@ -99,6 +99,7 @@ const ini = {
   head_images: [],
   content: ''
 }
+const genIni = () => Object.assign({}, ini)
 export default {
   components: { Tinymce },
   name: 'add',
@@ -110,7 +111,7 @@ export default {
       inputValue: '',
       basicForm: [{ name: '姓名' }, { name: '手机' }],
       fileList: [],
-      form: ini,
+      form: genIni(),
       city,
       cityArray: []
     }
@@ -149,6 +150,9 @@ export default {
       try {
         await api.add(form)
         this.$message('发布成功')
+        this.$router.push({
+          name: 'store-list'
+        })
       } catch (e) {
         //
       }
@@ -175,7 +179,7 @@ export default {
       })
     },
     reset() {
-      this.form = ini
+      this.form = genIni()
     },
     handleInputConfirm() {
       const inputValue = this.inputValue

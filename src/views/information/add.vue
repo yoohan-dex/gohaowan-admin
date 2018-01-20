@@ -48,12 +48,14 @@ const ini = {
   content: '',
   share_text: ''
 }
+const genIni = () => Object.assign({}, ini)
+
 export default {
   name: 'information-add',
   components: { Tinymce },
   data() {
     return {
-      form: ini
+      form: genIni()
     }
   },
   computed: {
@@ -66,7 +68,7 @@ export default {
       this.form.cover_image = res.data
     },
     reset() {
-      this.form = ini
+      this.form = genIni()
     },
     async onSubmit() {
       try {

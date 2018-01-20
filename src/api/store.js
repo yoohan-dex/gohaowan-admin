@@ -11,7 +11,9 @@ const get = page =>
   request({
     url: 'store/list',
     method: 'get',
-    page
+    params: {
+      page
+    }
   })
 const del = id =>
   request({

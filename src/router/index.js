@@ -108,6 +108,12 @@ export const asyncRouterMap = [
         meta: { title: 'activityAdd', icon: 'example', role: 'store' }
       },
       {
+        path: 'config',
+        component: _import('activity/config'),
+        name: 'activity-config',
+        meta: { title: 'activityConfig', icon: 'example', role: 'admin' }
+      },
+      {
         path: 'list',
         component: _import('activity/list'),
         name: 'list',
@@ -221,6 +227,13 @@ export const asyncRouterMap = [
       }
     ]
   },
+
+  {
+    path: '/setting',
+    component: Layout,
+    meta: { title: 'setting', icon: 'example', role: 'admin' },
+    children: []
+  }
 
   // {
   //   path: '/components',

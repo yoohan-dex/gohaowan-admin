@@ -49,7 +49,8 @@
         <!-- <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button> -->
         <el-button @click="handleEdit(scope.row.id)" type="text" size="small">详情</el-button>
         <el-button @click="handleMgr(scope.row.id)" type="text" size="small">报名管理</el-button>
-        <el-button v-if="role === 'admin'" @click="handleBlock(scope.row.id, (scope.row.is_show + 1) % 2)" type="text" size="small">{{scope.row.is_show === 0 ? '取消屏蔽' : '屏蔽'}}</el-button>
+        <el-button v-show="role === 'admin'" @click="handleBlock(scope.row.id, (scope.row.is_show + 1) % 2)" type="text" size="small">{{scope.row.is_show === 0 ? '取消屏蔽' : '屏蔽'}}</el-button>
+        <el-button v-show="role === 'admin'" @click="handleTop(scope.row.id, (scope.row.top + 1) % 2)" type="text" size="small">{{scope.row.is_show === 0 ? '置顶' : '取消置顶'}}</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -68,9 +69,9 @@ const transformList = item => {
       format.formatTime(item.start_time) +
       '  -  ' +
       format.formatTime(item.end_time),
-    member: `${item.joined_number}${item.join_limit_number === -1
-      ? ''
-      : '/' + item.join_limit_number}`
+    member: `${item.joined_number}${
+      item.join_limit_number === -1 ? '' : '/' + item.join_limit_number
+    }`
   }
 }
 
@@ -87,7 +88,7 @@ export default {
   },
   computed: {
     ...mapState({
-      role: state => state.app.role
+      role: state => state.user.role
     })
   },
   methods: {
@@ -100,6 +101,10 @@ export default {
     },
     async handleBlock(id, show) {
       await api.block({ id, show })
+      this.handleData(this.currentPage)
+    },
+    async handleTop(id, top) {
+      await api.setTop(id)(top)
       this.handleData(this.currentPage)
     },
     handleEdit(id) {

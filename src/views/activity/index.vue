@@ -31,6 +31,11 @@
   <el-form-item label="金额">
     <el-input  type="number" v-model="form.join_fee"></el-input>
   </el-form-item>
+  <el-form-item label="标签">
+    <el-tag @click.native="handleTagSelect(i)" v-for="(tag, i) in tags" :key="i" :type="tag.selected ? 'success' : 'info'" style="cursor: pointer;">
+      {{tag.name}}
+    </el-tag>
+  </el-form-item>
    <el-form-item label="报名人数上限">
      <el-row>
        <el-col :span="2"><el-switch v-model="isLimit" @change="handleSwitch"></el-switch></el-col>
@@ -117,6 +122,7 @@
 <script>
 import Tinymce from '@/components/Tinymce'
 import api from '../../api/activity'
+import config from '../../api/config'
 import { mapState } from 'vuex'
 
 const transformItem = item => {
@@ -144,6 +150,8 @@ const ini = {
   join_limit_number: -1,
   images: []
 }
+const genIni = () => Object.assign({}, ini)
+
 export default {
   components: { Tinymce },
   name: 'add',
@@ -155,7 +163,9 @@ export default {
       inputValue: '',
       basicForm: [{ name: '姓名' }, { name: '手机' }],
       fileList: [],
-      form: ini
+      tags: [],
+      selectedTags: [],
+      form: genIni()
     }
   },
   mounted() {
@@ -164,6 +174,7 @@ export default {
 
       this.handleData(this.id)
     }
+    this.getTags()
   },
   computed: {
     ...mapState({
@@ -173,16 +184,26 @@ export default {
   methods: {
     async handleData(id) {
       const res = await api.getDetail(id)
+
       this.form = transformItem(res.data)
       this.fileList = this.form.images.map(v => ({
         name: '',
         url: v
       }))
     },
+    async getTags() {
+      const res = await config[this.role].AT.get()
+
+      this.tags = res.data.map(v => ({ ...v, selected: false }))
+    },
+    handleTagSelect(i) {
+      this.tags[i].selected = !this.tags[i].selected
+    },
     async onSubmit() {
       // this.form.start_time = new Date(this.form.start_time).getTime()
       // this.form.end_time = new Date(this.form.end_time).getTime()
       // this.form.end_join_time = new Date(this.form.end_join_time).getTime()
+      this.form.tags = this.tags.filter(v => v.selected)
       try {
         await api.addActivity(this.form)
         this.$message('发布成功')
@@ -212,7 +233,7 @@ export default {
       })
     },
     reset() {
-      this.form = ini
+      this.form = genIni()
     },
     handleInputConfirm() {
       const inputValue = this.inputValue

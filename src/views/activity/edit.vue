@@ -31,6 +31,11 @@
   <el-form-item label="金额">
     <el-input  type="number" v-model="form.join_fee"></el-input>
   </el-form-item>
+  <el-form-item label="标签">
+    <el-tag @click.native="handleTagSelect(i)" v-for="(tag, i) in tags" :key="i" :type="tag.selected ? 'success' : 'info'" style="cursor: pointer;">
+      {{tag.name}}
+    </el-tag>
+  </el-form-item>
    <el-form-item label="报名人数上限">
      <el-row>
        <el-col :span="2"><el-switch v-model="isLimit" @change="handleSwitch"></el-switch></el-col>
@@ -116,6 +121,8 @@
 <script>
 import Tinymce from '@/components/Tinymce'
 import api from '../../api/activity'
+import config from '../../api/config'
+
 import format from '../../utils/format'
 import { mapState } from 'vuex'
 const transformItem = item => {
@@ -139,6 +146,8 @@ export default {
       inputValue: '',
       basicForm: [{ name: '姓名' }, { name: '手机' }],
       fileList: [],
+      tags: [],
+
       form: {
         title: '',
         content: '',
@@ -152,7 +161,8 @@ export default {
         join_form: [],
         join_fee: '',
         join_limit_number: -1,
-        images: []
+        images: [],
+        tags: []
       }
     }
   },
@@ -179,8 +189,21 @@ export default {
       if (this.form.join_limit_number > -1) {
         this.isLimit = true
       }
+      this.getTags()
+    },
+    async getTags() {
+      const res = await config[this.role].AT.get()
+
+      this.tags = res.data.map(v => ({
+        ...v,
+        selected: this.form.tag_list.some(t => t.id === v.id)
+      }))
+    },
+    handleTagSelect(i) {
+      this.tags[i].selected = !this.tags[i].selected
     },
     async onSubmit() {
+      this.form.tags = this.tags.filter(v => v.selected)
       try {
         api.editDetail(this.form)
         this.$message('修改成功')

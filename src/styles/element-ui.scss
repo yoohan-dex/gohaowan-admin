@@ -1,4 +1,10 @@
  //覆盖一些element-ui样式
+ .el-upload-list--picture-card .el-upload-list__item {
+  border-color: white;
+}
+.el-upload-list--picture-card .el-upload-list__item-actions .el-upload-list__item-delete {
+  display: none;
+}
 
  .el-breadcrumb__inner, .el-breadcrumb__inner a{
   font-weight: 400!important;

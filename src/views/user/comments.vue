@@ -99,7 +99,7 @@ export default {
   },
   computed: {
     ...mapState({
-      role: state => state.app.role
+      role: state => state.user.role
     })
   },
   methods: {

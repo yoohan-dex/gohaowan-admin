@@ -4,7 +4,7 @@ export default {
     activityAdd: '添加活动',
     activityList: '活动列表',
     activityEdit: '活动编辑',
-
+    activityConfig: '活动配置',
     actionMrg: '报名管理',
 
     information: '资讯',
@@ -20,6 +20,15 @@ export default {
     user: '用户',
     userList: '用户列表',
     userComments: '用户评论',
+    userConfig: '用户设置',
+
+    setting: '设置',
+    ATadd: '活动标签添加',
+    ATedit: '活动标签编辑',
+    ATlist: '活动标签编辑',
+    UTadd: '用户标签添加',
+    UTedit: '活动标签编辑',
+    UTlist: '活动标签编辑',
 
     dashboard: '首页',
     introduction: '简述',

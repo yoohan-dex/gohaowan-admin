@@ -67,9 +67,9 @@ const transformList = item => {
       format.formatTime(item.start_time) +
       '  -  ' +
       format.formatTime(item.end_time),
-    member: `${item.joined_number}${item.join_limit_number === -1
-      ? ''
-      : '/' + item.join_limit_number}`
+    member: `${item.joined_number}${
+      item.join_limit_number === -1 ? '' : '/' + item.join_limit_number
+    }`
   }
 }
 
@@ -86,7 +86,7 @@ export default {
   },
   computed: {
     ...mapState({
-      role: state => state.app.role
+      role: state => state.user.role
     })
   },
   methods: {
