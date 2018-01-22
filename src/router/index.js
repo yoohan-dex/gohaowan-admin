@@ -233,7 +233,7 @@ export const asyncRouterMap = [
     component: Layout,
     meta: { title: 'setting', icon: 'example', role: 'admin' },
     children: []
-  }
+  },
 
   // {
   //   path: '/components',

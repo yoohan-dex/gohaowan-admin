@@ -110,7 +110,7 @@ export default {
         index = origin.indexOf('.')
       }
       const name = file.name.slice(0, index)
-      this.form.UT.push({ image_url: res.data., name, sort: 1 })
+      this.form.UT.push({ image_url: res.data, name, sort: 1 })
     },
     handleATSuccess(res, file) {
       this.ATfileList.push(file)
