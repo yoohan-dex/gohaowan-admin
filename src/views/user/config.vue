@@ -4,7 +4,7 @@
     <el-form-item label="用户标签">
       <el-upload
         list-type="picture-card"
-        :action="`http://112.74.25.233:8004/${role}/common/upload`"
+        :action="`/${role}/common/upload`"
         name="files[]"
         :headers="{isAjax: 1}"
         :file-list="UTfileList"
@@ -110,7 +110,7 @@ export default {
         index = origin.indexOf('.')
       }
       const name = file.name.slice(0, index)
-      this.form.UT.push({ image_url: res.data, name, sort: 1 })
+      this.form.UT.push({ image_url: res.data., name, sort: 1 })
     },
     handleATSuccess(res, file) {
       this.ATfileList.push(file)
