@@ -91,7 +91,7 @@ export default {
     },
     async onSubmit() {
       try {
-        await api.add(this.form)
+        await api.edit(this.form)
         this.$message('发布成功')
       } catch (e) {
         //

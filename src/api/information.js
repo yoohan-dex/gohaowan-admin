@@ -7,6 +7,13 @@ function add(data) {
     data
   })
 }
+function edit(data) {
+  return request({
+    url: '/information/edit',
+    method: 'post',
+    data
+  })
+}
 function get(page) {
   return request({
     url: '/information/list',
@@ -49,6 +56,7 @@ function del(id) {
 
 export default {
   add,
+  edit,
   get,
   getDetail,
   top,

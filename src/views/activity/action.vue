@@ -7,6 +7,9 @@
         @current-change="handleData">
       </el-pagination>
     </div>
+    <p>
+      活动收入: {{overview.income}}
+    </p>
     <el-table
     :data="tableData"
     height="700"
@@ -78,11 +81,13 @@ export default {
     return {
       tableData: [],
       total: 0,
-      currentPage: 1
+      currentPage: 1,
+      overview: ''
     }
   },
   async mounted() {
     this.handleData(1)
+    this.handleOverview()
   },
   computed: {
     ...mapState({
@@ -97,6 +102,10 @@ export default {
       const data = res.data
       this.total = data.total
       this.tableData = data.list.map(v => transformList(v))
+    },
+    async handleOverview() {
+      const res = await api.simple(this.id)
+      this.overview = res.data
     },
     async handleBlock(id, show) {
       await api.block({ id, show })
