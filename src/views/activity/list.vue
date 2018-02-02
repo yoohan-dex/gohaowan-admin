@@ -50,7 +50,7 @@
         <el-button @click="handleEdit(scope.row.id)" type="text" size="small">详情</el-button>
         <el-button @click="handleMgr(scope.row.id)" type="text" size="small">报名管理</el-button>
         <el-button v-show="role === 'admin'" @click="handleBlock(scope.row.id, (scope.row.is_show + 1) % 2)" type="text" size="small">{{scope.row.is_show === 0 ? '取消屏蔽' : '屏蔽'}}</el-button>
-        <el-button v-show="role === 'admin'" @click="handleTop(scope.row.id, (scope.row.top + 1) % 2)" type="text" size="small">{{scope.row.is_show === 0 ? '置顶' : '取消置顶'}}</el-button>
+        <el-button v-show="role === 'admin'" @click="handleTop(scope.row.id, (scope.row.top + 1) % 2)" type="text" size="small">{{scope.row.top === 0 ? '置顶' : '取消置顶'}}</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -88,7 +88,7 @@ export default {
   },
   computed: {
     ...mapState({
-      role: state => state.user.role
+      role: state => state.user.roles
     })
   },
   methods: {

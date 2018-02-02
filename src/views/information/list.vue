@@ -73,7 +73,7 @@ export default {
   },
   computed: {
     ...mapState({
-      role: state => state.user.role
+      role: state => state.user.roles
     })
   },
   methods: {
